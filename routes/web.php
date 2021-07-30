@@ -17,4 +17,4 @@ use Mockery\Generator\StringManipulation\Pass\Pass;
 
 Route::get('/', [PasswordController::class, 'generate']);
 
-Route::post('/', [PasswordController::class, 'getNew']);
+Route::post('/', [PasswordController::class, 'getNew'])->name('password');
