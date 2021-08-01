@@ -18,6 +18,13 @@
         <form method="POST" id="password-form">
             @csrf
             <h2>Generate A Password</h2>
+            <h8>Password Length</h8>
+            <select name="length" class="form-select" style="width: 20%; margin-left:40%;" aria-label="Default select example">
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option selected value="12">12</option>
+                <option value="14">14</option>
+            </select>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="chk1" value="capital" id="capital"> Include Capital Letters
@@ -66,7 +73,8 @@
                 success: function(res) {
                     if (res.message == 'success') {
                         $("#pass").val(res.password);
-                    } else{
+                        $("#fail").html('');
+                    } else {
                         $("#fail").html(res.message);
                     }
                 }
