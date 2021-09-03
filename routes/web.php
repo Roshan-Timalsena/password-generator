@@ -18,3 +18,20 @@ use Mockery\Generator\StringManipulation\Pass\Pass;
 Route::get('/', [PasswordController::class, 'generate']);
 
 Route::post('/', [PasswordController::class, 'getNew'])->name('password');
+
+// Route::get('/lorem', function () {
+//     // return view('password', ['password'=>""]);
+//     $length = 50;
+//     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+//     $str = '';
+//     $max = strlen($keyspace) - 1;
+//     if ($max < 1) {
+//         // throw new Exception('$keyspace must be at least two characters long');
+//         echo "Some error";
+//     }
+//     for ($i = 0; $i < $length; ++$i) {
+//         $str .= $keyspace[random_int(0, $max)];
+//     }
+//     echo $str;
+// });

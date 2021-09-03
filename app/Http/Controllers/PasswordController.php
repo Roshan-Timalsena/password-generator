@@ -8,15 +8,16 @@ class PasswordController extends Controller
 {
     function generate()
     {
-        return view('password', ['password' => '']);
+        return view('password-gen', ['password' => '']);
     }
 
     function getNew(Request $request)
     {
+        return $request;
         $generatedPassword = "";
-        if (!empty($request->chk1) && !empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
+        if (!empty($request->symbol) && !empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle(bin2hex(random_bytes(20)) . 'ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle(bin2hex(random_bytes(20)) . 'ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#`$%^&*()_+\"-={}[]|:;><,.?');
         }
 
         if (!empty($request->chk1) && !empty($request->chk2) && !empty($request->chk3) && empty($request->chk4)) {
@@ -41,37 +42,37 @@ class PasswordController extends Controller
 
         if (!empty($request->chk1) && !empty($request->chk2) && empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$`%^&*()_+-\"={}[]|:;><,.?');
         }
 
         if (!empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_`+-={}\"[]|:;><,.?');
         }
 
         if (empty($request->chk1) && !empty($request->chk2) && empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('abcdefghijklmnopqrstuvwxyz~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('abcdefghijklmnopqrstuvwxyz~!@#$%^&*()_+`\"-={}[]|:;><,.?');
         }
 
         if (!empty($request->chk1) && empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*`\"()_+-={}[]|:;><,.?');
         }
 
         if (empty($request->chk1) && empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('1234567890~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('1234567890~!@#$%^&*()_+-=\"{`}[]|:;><,.?');
         }
 
         if (empty($request->chk1) && !empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle(bin2hex(random_bytes(20)) . 'ghijklmnopqrstuvwxyz~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle(bin2hex(random_bytes(20)) . 'ghijklmnopqrstuvwxyz~!@#$%^&*(\")_+-`={}[]|:;><,.?');
         }
 
         if (empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && !empty($request->chk4)) {
 
-            $baseString = str_shuffle('~!@#$%^&*()_+-={}[]|:;><,.?');
+            $baseString = str_shuffle('~!@#$%^&*\"`()_+-={}[]|:;><,.?');
         }
 
         if (empty($request->chk1) && empty($request->chk2) && !empty($request->chk3) && empty($request->chk4)) {
@@ -90,10 +91,10 @@ class PasswordController extends Controller
         }
 
         if (empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && empty($request->chk4)) {
-            return response()->json(['message'=>'Please Select At Least One Condition', 'password'=>'']);
-        } else{
-            $generatedPassword = substr(($baseString), 0, $request->length);
-            return response()->json(['message'=>'success', 'password'=>$generatedPassword]);
+            return response()->json(['message' => 'Please Select At Least One Condition', 'password' => '']);
+        } else {
+            $generatedPassword = substr($baseString,0,$request->length);
+            return response()->json(['message' => 'success', 'password' => $generatedPassword]);
         }
     }
 }
