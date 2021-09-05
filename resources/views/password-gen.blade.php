@@ -20,6 +20,9 @@
     <script defer src="js/script.js"></script>
 
     <title>Password Generator</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -74,11 +77,9 @@
                         <div>
                             <input class="form-check-input" type="checkbox" name="chk3" id="numbers" />Numbers ( 12345 )
                         </div>
-                        <div>
-                            <input class="form-check-input" type="checkbox" name="chk5" id="similar" />Similar
-                            Characters (
-                            o,O,0,i,I,l.L,1 )
-                        </div>
+                        {{-- <div>
+                            <input class="form-check-input" type="checkbox" name="chk5" id="similar" />Similar Characters ( o,O,0,i,I,l.L,1 )
+                        </div> --}}
                         <div>
                             <input class="form-check-input" type="checkbox" name="chk2" id="lcase" />Lowercase Letters (
                             abcde )
@@ -90,6 +91,20 @@
 
                         <div class="pw-length-generate row">
                             <div class="length-input-sec col-2">
+                                <input name="length" maxlength="2" id="pw-length-input" onkeyup="numbersOnly(this)" />
+                            </div>
+                            <div class="col-10">
+                                Password Length
+                                <div class="d-flex justify-content-between">
+                                    <p>10</p>
+                                    <input class="slider-range" type="range" name="pw-length" id="pw-length"
+                                        value="15" min="10" max="25" />
+                                    <p>25</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="pw-length-generate row">
+                            <div class="length-input-sec col-2">
                                 <input name="length" id="pw-length-input" />
                             </div>
                             <div class="col-10">
@@ -97,19 +112,20 @@
                                 <div class="d-flex justify-content-between">
                                     <p>10</p>
                                     <input class="slider-range" type="range" name="pw-length" id="pw-length"
-                                        value="15" min="10" max="50" />
-                                    <p>50</p>
+                                        value="15" min="10" max="25" />
+                                    <p>25</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="pw-generate-btn-sec">
                         {{-- <button type="submit">Generate Password</button> --}}
                         <input type="submit" value="Generate Password" class="btn btn-success">
 
                     </div>
-                    <div>
-                        <p class="text-danger" id='fail'></p>
+                    <br>
+                    <div id="fail-div">
+                        <p style="color:red;" id='fail'></p>
                     </div>
                 </form>
             </div>
@@ -135,6 +151,11 @@
     <!-- Footer Section END -->
 
     <script>
+        function numbersOnly(input) {
+            const regex = /[^0-5]+/;
+            input.value = input.value.replace(regex, "");
+        }
+
         function copy() {
             var copyPass = document.getElementById("copy-pass");
 
@@ -144,10 +165,10 @@
             navigator.clipboard.writeText(copyPass.value);
         }
 
-        function refresh(){
+        function refresh() {
             $("#password-form").submit();
         }
-        
+
         $("#password-form").on('submit', function(e) {
             e.preventDefault();
             let formData = $("#password-form").serialize();
@@ -163,9 +184,11 @@
                 dataType: "JSON",
                 success: function(res) {
                     if (res.message == 'success') {
-                        $("#copy-pass").val(res.password);
+                        $("#fail").removeClass("alert alert-danger");
                         $("#fail").html('');
+                        $("#copy-pass").val(res.password);
                     } else {
+                        $("#fail").addClass("alert alert-danger");
                         $("#fail").html(res.message);
                     }
                 }
@@ -174,5 +197,4 @@
         }
     </script>
 </body>
-
 </html>

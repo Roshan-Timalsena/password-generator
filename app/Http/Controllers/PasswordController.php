@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class PasswordController extends Controller
@@ -13,9 +14,14 @@ class PasswordController extends Controller
 
     function getNew(Request $request)
     {
-        return $request;
+
+        $validator = Validator::make($request->all(), ['length' => 'required|integer|min:10|max:25']);
+        if($validator->fails()){
+            return response()->json(['message'=>'Invalid Length', 'password'=>'']);
+        }
+
         $generatedPassword = "";
-        if (!empty($request->symbol) && !empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
+        if (!empty($request->chk1) && !empty($request->chk2) && !empty($request->chk3) && !empty($request->chk4)) {
 
             $baseString = str_shuffle(bin2hex(random_bytes(20)) . 'ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#`$%^&*()_+\"-={}[]|:;><,.?');
         }
@@ -71,23 +77,37 @@ class PasswordController extends Controller
         }
 
         if (empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && !empty($request->chk4)) {
-
-            $baseString = str_shuffle('~!@#$%^&*\"`()_+-={}[]|:;><,.?');
+            $baseString = "";
+            $string = str_shuffle('~!@#$%^&*\"`()_+-={}[]|:;><,.?');
+            for($i = 0 ; $i < $request->length; $i++){
+                $randomIndex = random_int(0,strlen($string));
+                $baseString .= $string[$randomIndex];
+            }
         }
 
         if (empty($request->chk1) && empty($request->chk2) && !empty($request->chk3) && empty($request->chk4)) {
-
-            $baseString = random_int(100000000000, 99999999999999);
+            $random = "123456789012345";
+            $num = random_int(100000000000, 99999999999999);
+            $baseString = str_shuffle($random . $num);
         }
 
         if (empty($request->chk1) && !empty($request->chk2) && empty($request->chk3) && empty($request->chk4)) {
-
-            $baseString = str_shuffle('abcdefghijklmnopqrstuvwxyz');
+            $baseString = "";
+            $string = str_shuffle('abcdefghijklmnopqrstuvwxyz');
+            for($i = 0 ; $i < $request->length; $i++){
+                $randomIndex = random_int(0,strlen($string));
+                $baseString .= $string[$randomIndex];
+            }
         }
 
         if (!empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && empty($request->chk4)) {
 
-            $baseString = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+            $string = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+            $baseString = "";
+            for($i = 0 ; $i < $request->length; $i++){
+                $randomIndex = random_int(0,strlen($string));
+                $baseString .= $string[$randomIndex];
+            }
         }
 
         if (empty($request->chk1) && empty($request->chk2) && empty($request->chk3) && empty($request->chk4)) {
