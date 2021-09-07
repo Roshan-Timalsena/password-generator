@@ -9,7 +9,7 @@ class PasswordController extends Controller
 {
     function generate()
     {
-        return view('password-gen', ['password' => '']);
+        return view('password.password-gen', ['password' => '']);
     }
 
     function getNew(Request $request)

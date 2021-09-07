@@ -38,8 +38,8 @@
             </button>
             <div class="collapse navbar-collapse nav--lists" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#">Menu 1</a>
-                    <a class="nav-link" href="#">Menu 2</a>
+                    <a class="nav-link" href="{{route('password-main')}}">Password Generator</a>
+                    <a class="nav-link" href="{{route('encrypt-main')}}">Encryption Tool</a>
                     <a class="nav-link" href="#">Menu 3</a>
                     <a class="nav-link" href="#">Menu 4</a>
                     <a class="nav-link" href="#">Menu 5</a>
